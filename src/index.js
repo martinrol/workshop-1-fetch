@@ -1,12 +1,9 @@
-/**
- * This file is just a silly example to show everything working in the browser.
- * When you're ready to start on your site, clear the file. Happy hacking!
- **/
+const baseUrl = "https://platzi-avo.vercel.app";
 
-const url = "https://platzi-avo.vercel.app/api/avo";
+const appNode = document.querySelector('#app');
 
 const fetchData = async () => {
-    const response = await fetch(url);
+    const response = await fetch(`${baseUrl}/api/avo`);
     const responseJson = await response.json();
 
     try {
@@ -14,8 +11,13 @@ const fetchData = async () => {
 
         responseJson.data.forEach((item) => {
         const image = document.createElement('img');
+        image.src = `${baseUrl}${item.image}`;
+
         const title = document.createElement('h2');
+        title.textContent = item.name;
+
         const price = document.createElement('p');
+        price.textContent = item.price;
 
         const container = document.createElement('div');
         container.append(image, title, price);
@@ -23,7 +25,7 @@ const fetchData = async () => {
         allOfItems.push(container)
     });
 
-    document.body.append(...allOfItems);
+    appNode.append(...allOfItems);
     } catch(error) {
         console.error(error.message);
     }
